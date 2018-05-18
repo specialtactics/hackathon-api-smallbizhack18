@@ -14,7 +14,7 @@ services:
 
 ### Workspace Utilities ##################################
     workspace:
-      container_name: laradock_workspace
+      container_name: socialise_workspace
       network_mode: "bridge"
       build:
         context: ./env/docker/workspace
@@ -75,7 +75,7 @@ services:
 
 ### PHP-FPM ##############################################
     php-fpm:
-      container_name: laradock_php_fpm
+      container_name: socialise_php_fpm
       network_mode: "bridge"
       build:
         context: ./env/docker/php-fpm
@@ -109,7 +109,7 @@ services:
       volumes_from:
         - application
       volumes:
-        - .env/docker/php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
+        - ./env/docker/php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
       links:
         - mariadb
       expose:
@@ -123,7 +123,7 @@ services:
 
 ### NGINX Server #########################################
     nginx:
-      container_name: laradock_nginx
+      container_name: socialise_nginx
       network_mode: "bridge"
       build:
         context: ./env/docker/nginx
@@ -139,8 +139,8 @@ services:
         - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
         - ${NGINX_SITES_PATH}:/etc/nginx/sites-available
       environment:
-        - VIRTUAL_HOST=laravel.test
-        - NGINX_HOST=laravel.test
+        - VIRTUAL_HOST=api.socialise.local
+        - NGINX_HOST=api.socialise.local
         - HTTPS_METHOD=noredirect
       external_links:
         - proxy
@@ -150,7 +150,7 @@ services:
 
 ### MariaDB ##############################################
     mariadb:
-      container_name: laradock_mariadb
+      container_name: socialise_mariadb
       build: ./env/docker/mariadb
       environment:
         - MARIADB_VERSION=${MARIADB_VERSION}
@@ -168,7 +168,7 @@ services:
 
 ### PostgreSQL ###########################################
 #    postgres:
-#      container_name: laradock_postgres
+#      container_name: socialise_postgres
 #      build: env/docker/postgres
 #      network_mode: "bridge"
 #      volumes:

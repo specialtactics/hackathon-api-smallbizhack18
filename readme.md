@@ -1,103 +1,154 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+Small Business Hackathon 2018
 
-## About Laravel API Boilerplate
-This is a boilerplate for writing API projects using Laravel. The aim of this project is to provide users with scaffolding and functionality which will make writing APIs quick, efficient and convenient.
+The following are the major technologies and their respective versions which are used in this project;
 
-## Project Setup
-You can (and should) set this up in exactly the same way as laravel. Any extra setup steps are outlined below.
 
-When setting up the project for the first time, please execute the following commands:
+| Technology                             | Version    |
+|----------------------------------------|------------|
+| [PHP](http://www.php.net/)             | 7.2.x      |
+| Insert Database here                   | ??????     |
+| [Laravel ](https://laravel.com/)       | 5.6.x      |
+| [Laravel API Boilerplate](https://github.com/specialtactics/l5-api-boilerplate) | 0.0.x-dev  |
+
+
+# Setup instructions
+
+This project uses docker for local development. Use the following instructions to set it up.
+
+## Copy over .env file
+First you will need to copy over the default env file so that docker can pick up our project configurations. You can do that using this command;
+
+```bash
+composer run post-root-package-install
+```
+
+Or if you do not have PHP installed, you can manually copy the file `env/.env.local` to `.env` in the project root.
+
+## Docker Environment Setup
+
+If you do not already have an up-to-date docker set up on your local system, please follow the docker instructions for your OS and install the latest stable version.
+
+ * [Install Docker](https://docs.docker.com/install/linux/docker-ce/fedora/#install-docker-ce-1)
+ * [Install Docker Compose](https://docs.docker.com/compose/install/#install-compose)
+
+### Install Docker Proxy
+
+Ensure that you have Docker Proxy installed and running. This can be achieved with the following command;
+
+```bash
+docker run -d --name proxy -p 80:80 -v /var/run/docker.sock://tmp/docker.sock:ro jwilder/nginx-proxy
+```
+
+Note that to start docker proxy in the future, you can use this command;
+
+```bash
+docker start proxy
+```
+
+### Build the docker environment for this project
+
+Run the following command in the project root;
+
+```bash
+docker-compose up
+```
+
+Note that you can specify a "-d" flag if you wish to run it in the background.
+
+The first time you do this, your containers will build, and then start. Hereafter, you will only need to start them (using the same command).
+
+Once all containers start, you should have your environment ready to go!
+
+### Add the project's local url to your hosts file
+
+Add your project's domain to your system hosts file. For example in linux;
+
+```bash
+echo '127.0.0.1 api.socialise.local' >> /etc/hosts
+```
+
+### Using Workspace
+
+To SSH into the project's workspace, execute the following command from the project root;
+
+```bash
+./env/workspace.sh
+```
+
+From there you can use artisan and composer commands, inside your development environment.
+
+
+### Using Docker
+
+To run this project in docker hereafter, execute the following commands to bring the project up;
+
+```bash
+docker start proxy
+docker-compose up -d
+```
+
+And the following commands to take it down;
+
+```bash
+docker-compose down
+```
+
+If you are running docker-compose in the foreground (ie. without the "-d" flag), just terminate it normally to stop the docker containers for the project.
+
+Some other useful commands;
+
+- `docker-compose restart` - Restart the containers
+- `docker-compose exec nginx bash` - Get into a container (nginx in this case)
+
+## Installation instructions
+
+Once your environment is set up, run the following commands in the workspace;
 
 ```bash
 composer install
-composer run post-root-package-install
 php artisan key:generate
 php artisan jwt:secret
 ```
 
-Additionally, please carry out the following steps:
+You should now be able to go to <http://api.socialise.local> and see a welcome message for the API. 
 
- * Remove the composer.lock from the .gitignore file
+## Database
 
-## Boilerplate Documentation
+The current MariaDB configuration uses the following details:
 
-### Boilerplate Parts
-This boilerplate is essentially a raw installation of Laravel 5, with some customisations. In order to keep the changes to Laravel itself to a minimum (in order to not clutter the new projects, and also make it easier to update), 
-most heavy lifting is done by the supporting package [l5-api](https://github.com/specialtactics/l5-api).
+ * Host: localhost
+ * User: laradock
+ * Password: secret
+ * Database: socialise
 
-The "l5-api" package has base "restful" elements - such as controllers, models, transformers and other things, designed to make Laravel more API-friendly.
+To connect to the DB locally, use localhost as the hostname.
 
-### Versioning
+# Development 
 
-This table shows you which versions of this package are based on which version of Laravel
+## Documentation
 
-| Laravel Version | Boilerplate Version | Minimum PHP Version |
-|-----------------|---------------------|---------------------|
-| 5.6             | 0.x.x-dev           | 7.1                 |
+To work on the project, ensure that you are familiar with the following documentation; 
 
-### Over-riding
-This boilerplate does not aim to be too prescriptive, and almost all classes from the supporting l5-api package exist inside it, already overridden and ready for you to customise. 
+ * [Laravel Docs](https://laravel.com/docs/5.6/readme)
+ * [API Boilerplate Docs](https://github.com/specialtactics/l5-api-boilerplate#boilerplate-documentation)
 
-### Generators
+## Coding Standards
+The PHP code sniffer coding standards are defined in phpcs.xml.
 
-Artisan generators have been re-written for some key features to ensure they comply with the boilerplate. Namely;
- 
- * Controllers
- * Models
- * Seeds
+Please set them up in PHPStorm, you can find information about how to do that [documented by JetBrains](https://confluence.jetbrains.com/display/PhpStorm/PHP+Code+Sniffer+in+PhpStorm#PHPCodeSnifferinPhpStorm-1.EnablePHPCodeSnifferintegrationinPhpStorm). 
 
-### Extra Configuration
+## Building
+To build the project, run the following command:
 
-This boilerplate has several additional configuration files you should be aware of:
- 
- * api.php - Dingo API Configuration
- * jwt.php - Tymon JWT Configuration
- * stubs.php  - This loads custom API stubs for certain artisan generators
+```bash
+composer build
+```
 
 ## Automated Testing
+This project is using phpunit with Laravel's testing helpers.
 
-This boilerplate is using Laravel's phpunit tests. You will find API tests in their own directory, and suite. Some tests have been written for the existing endpoints to get you started.
-
-To run tests on the commandline;
+To run tests, use the following command;
 
 ```bash
 composer test
 ```
-
-The convention used is that every test file will fresh and seed the database once only, at the start - in order to save execution time.
-
-## Contributing
-
-If you would like to contribute to this project, please feel free to submit a pull request. If you plan to do any major work - it may be worthwhile messaging the author beforehand to explain your plans and get them approved.
-
-Please keep in mind, this package is only the template portion of the boilerplate, the other portion is [l5-api](https://github.com/specialtactics/l5-api).
-
-## Check out the documentation of supporting projects
-
-Every great project stands on the shoulders of giants. Check out the documentation of these key projects to learn more.
-
- - [Laravel](https://laravel.com/docs/)
- - [Dingo API](https://github.com/dingo/api/wiki)
- - [Tymon JWT Auth](https://github.com/tymondesigns/jwt-auth)
- - [League Fractal](https://fractal.thephpleague.com/)
- - [Laravel UUID](https://github.com/webpatser/laravel-uuid/tree/2.1.1)
-
-## Recommended Packages
-
-I have tried to include only the packages thought absolutely necessary, so here is a list of packages I recommend checking out:
-
- - [Bugsnag for Laravel](https://github.com/bugsnag/bugsnag-laravel)
- - [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
- 
-
-## Todo
- - Authentication
- - Write more tests
- - Docs
- - Bulk delete
- - Bulk put/post
- - Logging of API requests using middleware
-
-## License
- 
-This boilerplate, much like the Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

@@ -719,7 +719,8 @@ ARG INSTALL_OH_MY_ZSH=true
 ENV INSTALL_OH_MY_ZSH ${INSTALL_OH_MY_ZSH}
 RUN if [ ${INSTALL_OH_MY_ZSH} = true ]; then \
     # Install the pgsql clint
-    apt-get -y install zsh wget \
+    apt-get update \
+    && apt-get -y install zsh wget \
     && wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true \
     && chsh -s $(which zsh) $(whoami) \
     && chsh -s $(which zsh) laradock \
