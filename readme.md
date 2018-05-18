@@ -3,11 +3,11 @@ Small Business Hackathon 2018
 The following are the major technologies and their respective versions which are used in this project;
 
 
-| Technology                             | Version    |
-|----------------------------------------|------------|
-| [PHP](http://www.php.net/)             | 7.2.x      |
-| Insert Database here                   | ??????     |
-| [Laravel ](https://laravel.com/)       | 5.6.x      |
+| Technology                                | Version    |
+|-------------------------------------------|------------|
+| [PHP](http://www.php.net/)                | 7.2.x      |
+| [PostgreSQL](https://www.postgresql.org/) | 10.4       |
+| [Laravel ](https://laravel.com/)          | 5.6.x      |
 | [Laravel API Boilerplate](https://github.com/specialtactics/l5-api-boilerplate) | 0.0.x-dev  |
 
 
