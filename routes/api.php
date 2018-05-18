@@ -13,9 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// For debugging / performance monitoring SQL
+// \DB::listen(function($query) {    \Log::info($query->sql);    \Log::info($query->bindings);    \Log::info($query->time); });
 
 /**
  * Welcome route - link to any public API documentation here
@@ -56,4 +55,10 @@ $api->version('v1', ['middleware' => ['api']], function ($api) {
         $api->delete('/{uuid}', 'App\Http\Controllers\UserController@delete');
     });
 
+    /**
+     * Roles
+     */
+    $api->group(['prefix' => 'roles'], function($api) {
+        $api->get('/', 'App\Http\Controllers\RoleController@getAll');
+    });
 });
