@@ -69,7 +69,7 @@ services:
       ports:
         - "${WORKSPACE_SSH_PORT}:22"
       links:
-        - mariadb
+        - postgres
       tty: true
 
 
@@ -111,7 +111,7 @@ services:
       volumes:
         - ./env/docker/php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
       links:
-        - mariadb
+        - postgres
       expose:
         - "9000"
       depends_on:
@@ -146,43 +146,43 @@ services:
         - proxy
       depends_on:
         - php-fpm
-        - mariadb
+        - postgres
 
 ### MariaDB ##############################################
-    mariadb:
-      container_name: socialise_mariadb
-      build: ./env/docker/mariadb
-      environment:
-        - MARIADB_VERSION=${MARIADB_VERSION}
-        - MYSQL_DATABASE=${MARIADB_DATABASE}
-        - MYSQL_USER=${MARIADB_USER}
-        - MYSQL_PASSWORD=${MARIADB_PASSWORD}
-        - MYSQL_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
-        - TZ=${WORKSPACE_TIMEZONE}
-      network_mode: "bridge"
-      volumes:
-        - ${DATA_PATH_HOST}/mariadb:/var/lib/mysql
-        - ${MARIADB_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
-      ports:
-        - "${MARIADB_PORT}:3306"
-
-### PostgreSQL ###########################################
-#    postgres:
-#      container_name: socialise_postgres
-#      build: env/docker/postgres
+#    mariadb:
+#      container_name: socialise_mariadb
+#      build: ./env/docker/mariadb
+#      environment:
+#        - MARIADB_VERSION=${MARIADB_VERSION}
+#        - MYSQL_DATABASE=${MARIADB_DATABASE}
+#        - MYSQL_USER=${MARIADB_USER}
+#        - MYSQL_PASSWORD=${MARIADB_PASSWORD}
+#        - MYSQL_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+#        - TZ=${WORKSPACE_TIMEZONE}
 #      network_mode: "bridge"
 #      volumes:
-#        - ${DATA_PATH_HOST}/postgres:/var/lib/postgresql/data
+#        - ${DATA_PATH_HOST}/mariadb:/var/lib/mysql
+#        - ${MARIADB_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
 #      ports:
-#        - "${POSTGRES_PORT}:5432"
-#      environment:
-#        - POSTGRES_DB=${POSTGRES_DB}
-#        - POSTGRES_USER=${POSTGRES_USER}
-#        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+#        - "${MARIADB_PORT}:3306"
+
+### PostgreSQL ###########################################
+    postgres:
+      container_name: socialise_postgres
+      build: env/docker/postgres
+      network_mode: "bridge"
+      volumes:
+        - ${DATA_PATH_HOST}/postgres:/var/lib/postgresql/data
+      ports:
+        - "${POSTGRES_PORT}:5432"
+      environment:
+        - POSTGRES_DB=${POSTGRES_DB}
+        - POSTGRES_USER=${POSTGRES_USER}
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 
 
 ### Volumes Setup ###########################################
 
 volumes:
-  mysql:
+  postgres:
     driver: "local"
