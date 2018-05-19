@@ -31,6 +31,8 @@ class CreateUsersTable extends Migration
             $table->string('follows')->nullable();
             $table->string('media')->nullable();
 
+            $table->unsignedInteger('balance')->default(0);
+
             $table->integer('primary_role')->unsigned()->nullable();
             $table->foreign('primary_role')->references('role_id')->on('roles')->onDelete('set null');
 
