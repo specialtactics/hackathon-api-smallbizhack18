@@ -54,6 +54,8 @@ class WebAuthController extends BaseController
             return $authUser;
         }
 
+        $roles = \App\Models\Role::all();
+
         return User::create([
             'name'     => $user->name,
             'email'    => $user->email,
@@ -61,7 +63,8 @@ class WebAuthController extends BaseController
             'provider_id' => $user->id,
             'avatar' => $user->avatar,
             'nickname' => $user->nickname,
-            'access_token' => $user->token
+            'access_token' => $user->token,
+            'primary_role' => $roles->where('name', \App\Models\Role::ROLE_SOCIALITE)->first()->role_id,
         ]);
     }
 }

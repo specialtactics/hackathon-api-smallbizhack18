@@ -3,7 +3,6 @@
 namespace App\Transformers;
 
 use Specialtactics\L5Api\Transformers\RestfulTransformer;
-use Specialtactics\L5Api\Models\RestfulModel;
 
 class BaseTransformer extends RestfulTransformer
 {

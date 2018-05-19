@@ -27,6 +27,9 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->nullable();
             $table->string('nickname')->nullable();
             $table->string('access_token')->nullable();
+            $table->string('followed_by')->nullable();
+            $table->string('follows')->nullable();
+            $table->string('media')->nullable();
 
             $table->unsignedInteger('balance')->default(0);
 

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Campaign;
+use App\Models\Photo;
 use App\Models\Role;
 use App\Models\User;
 use App\Services\InstagramService;
@@ -28,8 +29,8 @@ class ProcessCampaigns extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
+     * ProcessCampaigns constructor.
+     * @param InstagramService $instagramService
      */
     public function __construct(InstagramService $instagramService)
     {
@@ -51,18 +52,41 @@ class ProcessCampaigns extends Command
         
         //get all users
 //        $user_provider_ids = User::query()->select('provider_id')->where('primary_role', '=',  Role::ROLE_SOCIALITE)->get();
-        $user_provider_ids = User::select('provider_id')->where('primary_role', '=',  $roles->where('name', \App\Models\Role::ROLE_SOCIALITE)->first()->role_id)->get();
-        dd($user_provider_ids);
+        $users = User::select()
+            ->where('primary_role', '=',  $roles->where('name', \App\Models\Role::ROLE_SOCIALITE)->first()->role_id)
+            ->whereNotNull('provider_id')
+            ->get();
+        $user_provider_ids = $users->pluck('provider_id');
 
         foreach ($campaigns as $campaign) {
             foreach($campaign->campaignTags as $tag) {
-                dd($tag);
-                $posts = $this->instagramService->fetchPostWithTag($tag);
+                $posts = $this->instagramService->fetchPostWithTag($tag->name);
 
-//                dd($pos$$ts);
+
                 foreach($posts as $post) {
-                    if(in_array($post->id, $user_provider_ids)) {
+                    if($post->getUser() && in_array( $post->getUser()->getId(), $user_provider_ids->toArray())) {
+
+                        $newPost = [
+                            'campaign_id' => $campaign->campaign_id,
+                            'post_id' => $post->getId(),
+                            'url' => $post->getUrl(),
+                            'thumb' => get_class($post) == 'Smochin\Instagram\Model\Photo' ? '' : $post->getThumb(),
+                            'views' => get_class($post) == 'Smochin\Instagram\Model\Photo' ? '' : $post->getViews(),
+                            'caption' => $post->getCaption(),
+                            'user_id' => $post->getUser()->getId(),
+                            'username' => $post->getUser()->getUserName(),
+                            'likes' => $post->getLikesCount(),
+                            'comments' => $post->getCommentsCount(),
+                            'location_id' => $post->getLocation() ? $post->getLocation()->getId() : null,
+                            'location_name' => $post->getLocation() ? $post->getLocation()->getName() : null,
+                            'location_slug' => $post->getLocation() ? $post->getLocation()->getSlug() : null,
+                            'location_coordinate' => $post->getLocation() ? $post->getLocation()->getCoordinate : null,
+                            'tags' => \GuzzleHttp\json_encode($post->getTags()),
+                            'created' => $post->getCreated()
+                        ];
+
                         //do something with it
+                        Photo::updateOrCreate(['post_id' => $post->getId()], $newPost);
                     }
                 }
             }

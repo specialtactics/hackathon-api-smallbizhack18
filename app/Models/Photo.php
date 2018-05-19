@@ -9,12 +9,12 @@ class Photo extends BaseModel
     /**
      * @var int Auto increments integer key
      */
-    public $primaryKey = '_id';
+    public $primaryKey = 'photo_id';
 
     /**
      * @var string UUID key
      */
-    public $uuidKey = '_uuid';
+    public $uuidKey = 'photo_uuid';
 
     /**
      * @var array Attributes to disallow updating through an API update or put
@@ -34,7 +34,7 @@ class Photo extends BaseModel
     /**
      * @var array The attributes that are mass assignable.
      */
-    protected $fillable = [];
+    protected $fillable = ['campaign_id', 'post_id', 'url', 'caption', 'user_id', 'username', 'likes', 'comments', 'location_id', 'location_name', 'location_slug', 'location_coordinate', 'tags', 'created'];
 
     /**
      * @var array The attributes that should be hidden for arrays and API output

@@ -16,7 +16,6 @@ class InstagramService
     {
         $crawler = new Crawler();
         $media = $crawler->getMediaByTag($tag);
-        dd($media[0]);
-        return $this->response->array($media);
+        return $media;
     }
 }
