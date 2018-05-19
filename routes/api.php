@@ -63,6 +63,14 @@ $api->version('v1', ['middleware' => ['api']], function ($api) {
             $api->get('/', 'App\Http\Controllers\UserCampaignController@getAll');
             $api->get('/{campaignUuid}', 'App\Http\Controllers\UserCampaignController@get');
         });
+
+        /**
+         * Users' Payouts
+         */
+        $api->group(['prefix' => '/{uuid}/payouts'], function($api) {
+            $api->post('/', 'App\Http\Controllers\PayoutController@post');
+            $api->get('/', 'App\Http\Controllers\PayoutController@getAll');
+        });
     });
 
     /**
