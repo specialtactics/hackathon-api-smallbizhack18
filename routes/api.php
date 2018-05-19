@@ -78,7 +78,9 @@ $api->version('v1', ['middleware' => ['api']], function ($api) {
      */
     $api->group(['prefix' => 'campaigns'], function($api) {
         $api->get('/', 'App\Http\Controllers\CampaignController@getAll');
+        $api->get('/{uuid}', 'App\Http\Controllers\CampaignController@get');
         $api->get('/process', 'App\Http\Controllers\CampaignController@processAll');
+
     });
 
     /**
