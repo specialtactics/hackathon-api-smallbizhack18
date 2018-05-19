@@ -10,9 +10,6 @@ class HttpsProtocol
     public function handle(Request $request, Closure $next)
     {
         dump($request->isFromTrustedProxy());
-        dump($proto = $request->getTrustedValues(Request::HEADER_X_FORWARDED_PROTO));
-
-        dump(in_array(strtolower($proto[0]), array('https', 'on', 'ssl', '1'), true));
 
         dump($request->secure());
         dump(env('APP_ENV'));
