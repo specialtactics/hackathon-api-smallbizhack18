@@ -24,7 +24,7 @@ class Campaign extends BaseModel
     /**
      * @var array Relations to load implicitly by Restful controllers
      */
-    public static $localWith = ['campaignTags'];
+    public static $localWith = ['campaignTags', 'photos'];
 
     /**
      * @var null|BaseTransformer The transformer to use for this model, if overriding the default
@@ -85,6 +85,10 @@ class Campaign extends BaseModel
 
     public function campaignTags() {
         return $this->hasMany(CampaignTag::class, 'campaign_id', 'campaign_id');
+    }
+
+    public function photos() {
+        return $this->hasMany(Photo::class, 'campaign_id', 'campaign_id');
     }
 
 }

@@ -19,13 +19,14 @@ class Photo extends Migration
             $table->increments('photo_id');
             $table->uuid('photo_uuid')->unique();
 
+            $table->integer('user_id')->nullable();
             $table->bigInteger('post_id');
             $table->unsignedInteger('campaign_id');
             $table->string('caption')->nullable();
             $table->string('thumb')->nullable();
             $table->integer('views')->nullable();
             $table->string('url');
-            $table->bigInteger('user_id')->nullable();
+            $table->bigInteger('instagram_user_id')->nullable();
             $table->string('username')->nullable();
             $table->integer('likes')->nullable();
             $table->integer('comments')->nullable();
@@ -37,6 +38,7 @@ class Photo extends Migration
             $table->dateTime('created')->nullable();
 
             $table->foreign('campaign_id')->references('campaign_id')->on('campaigns')->onDelete('set null');
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('set null');
 
             $table->timestamps();
         });
