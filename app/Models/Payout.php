@@ -34,7 +34,7 @@ class Payout extends BaseModel
     /**
      * @var array The attributes that are mass assignable.
      */
-    protected $fillable = ['amount', 'user_id'];
+    protected $fillable = ['amount', 'email', 'user_id'];
 
     /**
      * @var array The attributes that should be hidden for arrays and API output
@@ -50,6 +50,7 @@ class Payout extends BaseModel
     {
         return [
             'amount' => 'required|numeric',
+            'email' => 'required|email',
         ];
     }
 

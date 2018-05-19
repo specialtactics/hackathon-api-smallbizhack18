@@ -19,6 +19,7 @@ class CreatePayoutTable extends Migration
             $table->increments('payout_id');
             $table->uuid('payout_uuid')->unique();
 
+            $table->string('email');
             $table->decimal('amount', 8, 2);
 
             $table->unsignedInteger('user_id');
