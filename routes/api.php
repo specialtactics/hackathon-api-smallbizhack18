@@ -56,13 +56,20 @@ $api->version('v1', ['middleware' => ['api']], function ($api) {
         $api->delete('/{uuid}', 'App\Http\Controllers\UserController@delete');
 
         /**
-         * Campaign
+         * Users' Campaigns
          */
         $api->group(['prefix' => '/{uuid}/campaigns'], function($api) {
-            $api->post('/', 'App\Http\Controllers\CampaignController@post');
-            $api->get('/', 'App\Http\Controllers\CampaignController@getAll');
-            $api->get('/{campaignUuid}', 'App\Http\Controllers\CampaignController@get');
+            $api->post('/', 'App\Http\Controllers\UserCampaignController@post');
+            $api->get('/', 'App\Http\Controllers\UserCampaignController@getAll');
+            $api->get('/{campaignUuid}', 'App\Http\Controllers\UserCampaignController@get');
         });
+    });
+
+    /**
+     * Campaigns
+     */
+    $api->group(['prefix' => 'campaigns'], function($api) {
+        $api->get('/', 'App\Http\Controllers\CampaignController@getAll');
     });
 
     /**
