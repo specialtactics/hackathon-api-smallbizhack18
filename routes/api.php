@@ -48,6 +48,7 @@ $api->version('v1', ['middleware' => ['api']], function ($api) {
      */
     $api->group(['prefix' => 'users'], function($api) {
         $api->get('/', 'App\Http\Controllers\UserController@getAll');
+        $api->get('/images', 'App\Http\Controllers\UserController@images');
         $api->get('/{uuid}', 'App\Http\Controllers\UserController@get');
         $api->post('/', 'App\Http\Controllers\UserController@post');
         $api->put('/{uuid}', 'App\Http\Controllers\UserController@put');
@@ -62,3 +63,9 @@ $api->version('v1', ['middleware' => ['api']], function ($api) {
         $api->get('/', 'App\Http\Controllers\RoleController@getAll');
     });
 });
+
+Route::group(['middleware' => ['web']], function () {
+    Route::get('auth/{provider}', 'Auth\WebAuthController@redirectToProvider');
+    Route::get('auth/{provider}/callback', 'Auth\WebAuthController@handleProviderCallback');
+});
+
