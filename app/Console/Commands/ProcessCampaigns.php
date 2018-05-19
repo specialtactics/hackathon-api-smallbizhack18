@@ -44,17 +44,22 @@ class ProcessCampaigns extends Command
      */
     public function handle()
     {
+        $roles = \App\Models\Role::all();
+
         /** @var Campaign[] $campaigns */
-        $campaigns = Campaign::where('active', true)->with('tags')->first();
+        $campaigns = Campaign::where('status', 'active')->with('campaignTags')->get();
         
         //get all users
-        $user_provider_ids = User::select('provider_id')->where('primary_role', Role::ROLE_SOCIALITE)->get();
+//        $user_provider_ids = User::query()->select('provider_id')->where('primary_role', '=',  Role::ROLE_SOCIALITE)->get();
+        $user_provider_ids = User::select('provider_id')->where('primary_role', '=',  $roles->where('name', \App\Models\Role::ROLE_SOCIALITE)->first()->role_id)->get();
+        dd($user_provider_ids);
 
         foreach ($campaigns as $campaign) {
             foreach($campaign->campaignTags as $tag) {
+                dd($tag);
                 $posts = $this->instagramService->fetchPostWithTag($tag);
 
-                dd($posts);
+//                dd($pos$$ts);
                 foreach($posts as $post) {
                     if(in_array($post->id, $user_provider_ids)) {
                         //do something with it
