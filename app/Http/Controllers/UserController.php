@@ -30,11 +30,4 @@ class UserController extends BaseController
         return $this->response->item(parent::post($request), $this->getTransformer())->setStatusCode(201);
     }
     
-    public function images(Request $request)
-    {
-
-        $crawler = new Crawler();
-        $media = $crawler->getMediaByTag('smallBizHack');
-        return $this->response->array($media);
-    }
 }
