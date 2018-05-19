@@ -6,6 +6,7 @@ use App\Transformers\BaseTransformer;
 
 class Photo extends BaseModel
 {
+
     /**
      * @var int Auto increments integer key
      */
@@ -34,12 +35,34 @@ class Photo extends BaseModel
     /**
      * @var array The attributes that are mass assignable.
      */
-    protected $fillable = ['campaign_id', 'post_id', 'url', 'caption', 'user_id', 'username', 'likes', 'comments', 'location_id', 'location_name', 'location_slug', 'location_coordinate', 'tags', 'created'];
+    protected $fillable = ['campaign_id', 'post_id', 'code', 'instagram_user_id', 'url', 'caption', 'user_id', 'username', 'likes', 'comments', 'location_id', 'location_name', 'location_slug', 'location_coordinate', 'tags', 'created'];
 
     /**
      * @var array The attributes that should be hidden for arrays and API output
      */
     protected $hidden = [];
+
+
+    public static function boot()
+    {
+        parent::boot();
+
+        // Add functionality for updating a model
+        static::saved(function (Photo $photo) {
+
+            $campaignUserPhotoAttributes = [
+                'user_id' => $photo->user_id,
+                'campaign_id' => $photo->campaign_id,
+                'photo_id' => $photo->photo_id,
+            ];
+            $campaignUserPhoto = $campaignUserPhotoAttributes + [
+                'likes' => $photo->likes,
+                'comments' => $photo->comments
+            ];
+
+            CampaignUserPhoto::updateOrCreate($campaignUserPhotoAttributes, $campaignUserPhoto);
+        });
+    }
 
     /**
      * Return the validation rules for this model
@@ -51,4 +74,22 @@ class Photo extends BaseModel
         return [];
     }
 
+    public function getUrlAttribute()
+    {
+        return 'https://www.instagram.com/p/' . $this->code;
+    }
+
+    public function campaign()
+    {
+        return $this->hasOne(Campaign::class, 'campaign_id', 'campaign_id');
+    }
+    public function user()
+    {
+        return $this->hasOne(User::class, 'user_id', 'user_id');
+    }
+
+    public function campaignUserPhoto()
+    {
+        return $this->hasOne(Photo::class, 'photo_id', 'photo_id');
+    }
 }
