@@ -26,6 +26,8 @@ class CampaignsTable extends Migration
             $table->text('location');
 
             $table->decimal('budget', 8, 2);
+            $table->decimal('balance', 8, 2);
+
             $table->decimal('interaction_cost', 8, 2);
 
 

@@ -48,6 +48,7 @@ class Campaign extends BaseModel
      */
     protected $casts = [
         'budget' => 'real',
+        'balance' => 'real',
         'interaction_cost' => 'real',
     ];
 
@@ -65,6 +66,21 @@ class Campaign extends BaseModel
             'interaction_cost' => 'required|numeric',
             'user_id' => 'integer',
         ];
+    }
+
+    /**
+     * Boot the model
+     *
+     * Add various functionality in the model lifecycle hooks
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        // Add functionality for creating a model
+        static::creating(function (Campaign $model) {
+            $model->balance = $model->budget;
+        });
     }
 
     public function campaignTags() {
