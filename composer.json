@@ -19,6 +19,7 @@
         "laravel/socialite": "^3.0",
         "laravel/tinker": "^1.0",
         "predis/predis": "^1.1",
+        "pulkitjalan/paypal-laravel": "dev-master",
         "smochin/instagram-php-crawler": "^1.0",
         "socialiteproviders/instagram": "^3.0",
         "specialtactics/l5-api": "dev-master"

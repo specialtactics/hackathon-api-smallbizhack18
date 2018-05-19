@@ -39,5 +39,14 @@ return [
         'client_secret' =>  env('INSTAGRAM_CLIENT_SECRET'),
         'redirect' => env('INSTAGRAM_URL'),
     ],
-
+    'paypal' => [
+        'client_id' => env('PAYPAL_CLIENT_ID'),
+        'client_secret' => env('PAYPAL_CLIENT_SECRET'),
+        'mode' => env('PAYPAL_MODE'), // default is sandbox
+        // 'log' => [
+        //     'enabled' => true // default is false
+        //     'file' => 'paypal.log' // default is laravel.log
+        //     'level' => 'DEBUG' // default is DEBUG
+        // ],
+    ],
 ];
