@@ -129,6 +129,7 @@ class User extends BaseModel implements
         return $this->getUuidKey();
     }
 
+
     /**
      * For Authentication
      * Return a key value array, containing any custom claims to be added to the JWT.
