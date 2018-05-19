@@ -9,12 +9,14 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Hash;
 
 class User extends BaseModel implements
     AuthenticatableContract,
     AuthorizableContract,
-    CanResetPasswordContract
+    CanResetPasswordContract,
+    JWTSubject
 {
     use Authenticatable, Authorizable, CanResetPassword;
     use Notifiable;
@@ -32,7 +34,7 @@ class User extends BaseModel implements
     /**
      * @var array Relations to load implicitly by Restful controllers
      */
-    public static $localWith = ['primaryRole', 'roles'];
+    public static $localWith = ['primaryRole', 'roles', 'balance'];
 
     /**
      * The attributes that are mass assignable.
@@ -105,6 +107,15 @@ class User extends BaseModel implements
      */
     public function campaigns() {
         return $this->hasMany(Campaign::class, 'user_id', 'user_id');
+    }
+
+    /**
+     * User's balance
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasOne
+     */
+    public function balance() {
+        return $this->hasOne(Balance::class, 'user_id', 'user_id');
     }
 
     /**
