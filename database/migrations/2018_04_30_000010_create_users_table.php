@@ -28,6 +28,8 @@ class CreateUsersTable extends Migration
             $table->string('nickname')->nullable();
             $table->string('access_token')->nullable();
 
+            $table->unsignedInteger('balance')->default(0);
+
             $table->integer('primary_role')->unsigned()->nullable();
             $table->foreign('primary_role')->references('role_id')->on('roles')->onDelete('set null');
 
