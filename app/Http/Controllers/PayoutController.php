@@ -34,6 +34,6 @@ class PayoutController extends RestfulChildController
 
         $this->paymentService->payout($resource);
 
-        $response = $this->response->item($resource, $this->getTransformer())->setStatusCode(201);
+        return $this->response->item($resource, $this->getTransformer())->setStatusCode(201);
     }
 }

@@ -61,4 +61,16 @@ class Payout extends BaseModel
         'amount' => 'real',
     ];
 
+    /**
+     * Get batch ID for paypal - limited to 30 characters
+     *
+     * @return mixed|string
+     */
+    public function getBatchId() {
+        $string = $this->getUuidKey();
+        $string = str_replace('-', '', $string);
+        $string = substr($string, 0, 30);
+        return $string;
+    }
+
 }
