@@ -34,5 +34,10 @@ return [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
+    'instagram' => [
+        'client_id' =>  env('INSTAGRAM_CLIENT_ID'),
+        'client_secret' =>  env('INSTAGRAM_CLIENT_SECRET'),
+        'redirect' => env('INSTAGRAM_URL'),
+    ],
 
 ];

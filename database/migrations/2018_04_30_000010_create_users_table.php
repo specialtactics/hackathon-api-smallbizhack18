@@ -20,8 +20,13 @@ class CreateUsersTable extends Migration
             $table->uuid('user_uuid')->unique();
 
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email')->nullable();
             $table->string('password');
+            $table->string('provider')->nullable();
+            $table->string('provider_id')->nullable();
+            $table->string('avatar')->nullable();
+            $table->string('nickname')->nullable();
+            $table->string('access_token')->nullable();
 
             $table->unsignedInteger('balance')->default(0);
 
