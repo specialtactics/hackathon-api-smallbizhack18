@@ -53,6 +53,15 @@ $api->version('v1', ['middleware' => ['api']], function ($api) {
         $api->put('/{uuid}', 'App\Http\Controllers\UserController@put');
         $api->patch('/{uuid}', 'App\Http\Controllers\UserController@patch');
         $api->delete('/{uuid}', 'App\Http\Controllers\UserController@delete');
+
+        /**
+         * Campaign
+         */
+        $api->group(['prefix' => '/{uuid}/campaigns'], function($api) {
+            $api->post('/', 'App\Http\Controllers\CampaignController@post');
+            $api->get('/', 'App\Http\Controllers\CampaignController@getAll');
+            $api->get('/{campaignUuid}', 'App\Http\Controllers\CampaignController@get');
+        });
     });
 
     /**
@@ -60,5 +69,12 @@ $api->version('v1', ['middleware' => ['api']], function ($api) {
      */
     $api->group(['prefix' => 'roles'], function($api) {
         $api->get('/', 'App\Http\Controllers\RoleController@getAll');
+    });
+
+    /**
+     * Campaign tags
+     */
+    $api->group(['prefix' => '/campaigns'], function($api) {
+        $api->post('/{campaignUuid}/tags', 'App\Http\Controllers\CampaignTagController@post');
     });
 });
