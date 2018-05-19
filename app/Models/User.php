@@ -40,7 +40,7 @@ class User extends BaseModel implements
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'primary_role'
     ];
 
     /**
@@ -49,7 +49,7 @@ class User extends BaseModel implements
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'primary_role',
     ];
 
     /**
