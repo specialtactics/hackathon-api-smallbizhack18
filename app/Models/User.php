@@ -110,12 +110,12 @@ class User extends BaseModel implements
     }
 
     /**
-     * User's balance
+     * User's payouts
      *
      * @return \Illuminate\Database\Eloquent\Relations\hasOne
      */
-    public function balance() {
-        return $this->hasOne(Balance::class, 'user_id', 'user_id');
+    public function payouts() {
+        return $this->hasMany(Payout::class, 'user_id', 'user_id');
     }
 
     /**
