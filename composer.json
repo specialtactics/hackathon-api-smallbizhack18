@@ -21,7 +21,7 @@
         "predis/predis": "^1.1",
         "smochin/instagram-php-crawler": "^1.0",
         "socialiteproviders/instagram": "^3.0",
-        "specialtactics/l5-api": "dev-master",
+        "specialtactics/l5-api": "dev-master"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

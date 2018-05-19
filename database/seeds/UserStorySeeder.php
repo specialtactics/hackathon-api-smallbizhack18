@@ -16,6 +16,13 @@ class UserStorySeeder extends BaseSeeder
             'primary_role' => $roles->where('name', Role::ROLE_ADMIN)->first()->role_id,
         ]);
 
+        // Create an admin user
+        factory(App\Models\User::class)->create([
+            'name'         => 'Tom Somerville',
+            'email'        => 'tsomerville+socialite@gmail.com',
+            'primary_role' => $roles->where('name', Role::ROLE_SOCIALITE)->first()->role_id,
+        ]);
+
 
     }
 }
