@@ -1,5 +1,77 @@
 <?php
 
+/*
+|------------------------------------------------------------------------------
+| Heroku DATABASE_URL
+|------------------------------------------------------------------------------
+|
+| Parse the Heroku's DATABASE_URL environment and set each part so Laravel
+| database can be configured.
+|
+*/
+
+$databaseEnv = env('DATABASE_URL', '');
+
+if (!empty($databaseEnv)) {
+    $databaseUrl = parse_url($databaseEnv);
+
+    if (isset($databaseUrl['scheme']) && $databaseUrl['scheme'] === 'mysql') {
+        putenv('DB_CONNECTION=mysql');
+    }
+
+    if (isset($databaseUrl['scheme']) && $databaseUrl['scheme'] === 'postgres') {
+        putenv('DB_CONNECTION=pgsql');
+    }
+
+    if (isset($databaseUrl['host'])) {
+        putenv('DB_HOST='.$databaseUrl['host']);
+    }
+
+    if (isset($databaseUrl['port'])) {
+        putenv('DB_PORT='.$databaseUrl['port']);
+    }
+
+    if (isset($databaseUrl['path'])) {
+        putenv('DB_DATABASE='.substr($databaseUrl['path'], 1));
+    }
+
+    if (isset($databaseUrl['user'])) {
+        putenv('DB_USERNAME='.$databaseUrl['user']);
+    }
+
+    if (isset($databaseUrl['pass'])) {
+        putenv('DB_PASSWORD='.$databaseUrl['pass']);
+    }
+}
+
+/*
+|------------------------------------------------------------------------------
+| Heroku REDIS_URL
+|------------------------------------------------------------------------------
+|
+| Parse the Heroku's REDIS_URL environment and set each part so Laravel
+| redis can be configured.
+|
+*/
+
+$redisEnv = env('REDIS_URL', '');
+
+if (!empty($databaseEnv)) {
+    $redisUrl = parse_url($redisEnv);
+
+    if (isset($redisUrl['host'])) {
+        putenv('REDIS_HOST='.$redisUrl['host']);
+    }
+
+    if (isset($redisUrl['port'])) {
+        putenv('REDIS_PORT='.$redisUrl['port']);
+    }
+
+    if (isset($redisUrl['pass'])) {
+        putenv('REDIS_PASSWORD='.$redisUrl['pass']);
+    }
+}
+
 return [
 
     /*
