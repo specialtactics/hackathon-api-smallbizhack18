@@ -6,7 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateCampaignUserPhoto extends Migration
 {
-    const TABLE_NAME = 'campaign_user_photo';
+    const TABLE_NAME = 'campaign_user_photos';
 
     /**
      * Run the migrations.

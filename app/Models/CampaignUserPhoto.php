@@ -46,15 +46,36 @@ class CampaignUserPhoto extends BaseModel
         parent::boot();
 
         // Add functionality for updating a model
-        static::saving(function (CampaignUserPhoto $new) {
+        static::saving(function (CampaignUserPhoto $campaignUserPhoto) {
 
+            $interactionCost = $campaignUserPhoto->campaign->interaction_cost;
 
-//            $interactionCost = $photo->campaign->interaction_cost;
-//            $moneyMade = $photo->likes * $interactionCost + $photo->comments * $interactionCost;
-//            $photo->user->balance = $moneyMade;
-//            $photo->campaign->balance = $photo->campaign->balance - $moneyMade;
-//            $photo->campaign->save();
-//            $photo->user->save();
+            if($campaignUserPhoto->original) {
+                $likesDifference = $campaignUserPhoto->attributes['likes'] - $campaignUserPhoto->original['likes'];
+
+                $commentsDifference = $campaignUserPhoto->attributes['comments'] - $campaignUserPhoto->original['comments'];
+            } else {
+                $likesDifference = $campaignUserPhoto->attributes['likes'];
+
+                $commentsDifference = $campaignUserPhoto->attributes['comments'];
+            }
+
+            $moneyMade = $likesDifference * $interactionCost + $commentsDifference * $interactionCost;
+
+            $campaignUserPhoto->user->balance = $campaignUserPhoto->user->balance + $moneyMade;
+            $campaignUserPhoto->campaign->balance = $campaignUserPhoto->campaign->balance - $moneyMade;
+
+            if($campaignUserPhoto->campaign->balance < 0) {
+
+                $moneyBack = $campaignUserPhoto->campaign->balance * -1;
+                $campaignUserPhoto->campaign->balance = $campaignUserPhoto->campaign->balance + $moneyBack;
+                $campaignUserPhoto->campaign->status = 'finished';
+
+                $campaignUserPhoto->user->balance = $campaignUserPhoto->user->balance - $moneyBack;
+            }
+
+            $campaignUserPhoto->campaign->save();
+            $campaignUserPhoto->user->save();
         });
     }
     /**

@@ -49,14 +49,18 @@ class Photo extends BaseModel
 
         // Add functionality for updating a model
         static::saved(function (Photo $photo) {
-            
-            CampaignUserPhoto::updateOrCreate([
+
+            $campaignUserPhotoAttributes = [
                 'user_id' => $photo->user_id,
                 'campaign_id' => $photo->campaign_id,
                 'photo_id' => $photo->photo_id,
+            ];
+            $campaignUserPhoto = $campaignUserPhotoAttributes + [
                 'likes' => $photo->likes,
-                'comments' => $photo->comments,
-            ]);
+                'comments' => $photo->comments
+            ];
+
+            CampaignUserPhoto::updateOrCreate($campaignUserPhotoAttributes, $campaignUserPhoto);
         });
     }
 
@@ -82,5 +86,10 @@ class Photo extends BaseModel
     public function user()
     {
         return $this->hasOne(User::class, 'user_id', 'user_id');
+    }
+
+    public function campaignUserPhoto()
+    {
+        return $this->hasOne(Photo::class, 'photo_id', 'photo_id');
     }
 }
