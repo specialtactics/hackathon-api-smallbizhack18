@@ -48,6 +48,7 @@ class InstagramService
                                 'campaign_id' => $campaign->campaign_id,
                                 'post_id' => $post->getId(),
                                 'user_id' => $user->user_id,
+                                'code' => $post->getCode(),
                                 'url' => $post->getUrl(),
                                 'thumb' => get_class($post) == 'Smochin\Instagram\Model\Photo' ? '' : $post->getThumb(),
                                 'views' => get_class($post) == 'Smochin\Instagram\Model\Photo' ? '' : $post->getViews(),

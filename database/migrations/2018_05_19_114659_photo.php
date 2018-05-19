@@ -23,6 +23,7 @@ class Photo extends Migration
             $table->bigInteger('post_id');
             $table->unsignedInteger('campaign_id');
             $table->string('caption')->nullable();
+            $table->string('code')->nullable();
             $table->string('thumb')->nullable();
             $table->integer('views')->nullable();
             $table->string('url');
