@@ -62,7 +62,6 @@ class ProcessCampaigns extends Command
             foreach($campaign->campaignTags as $tag) {
                 $posts = $this->instagramService->fetchPostWithTag($tag->name);
 
-
                 foreach($posts as $post) {
                     if($post->getUser() && in_array( $post->getUser()->getId(), $user_provider_ids->toArray())) {
 
@@ -91,7 +90,5 @@ class ProcessCampaigns extends Command
                 }
             }
         }
-
-
     }
 }

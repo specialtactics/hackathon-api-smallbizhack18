@@ -37,7 +37,7 @@ class WebAuthController extends BaseController
         $authUser = $this->findOrCreateUser($user, $provider);
 //        Auth::login($authUser, true);
 
-        return redirect('/users/' . $authUser->getUuidKey());
+        return redirect()->away(env('FRONTEND_APP_URL') . '/callback?user_id=' . $authUser->getUuidKey());
     }
 
     /**
