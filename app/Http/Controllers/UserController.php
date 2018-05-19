@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Smochin\Instagram\Crawler;
 
 
 class UserController extends BaseController
@@ -28,4 +29,5 @@ class UserController extends BaseController
 
         return $this->response->item(parent::post($request), $this->getTransformer())->setStatusCode(201);
     }
+    
 }

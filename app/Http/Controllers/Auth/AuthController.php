@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Services\RestfulService;
-use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
 use App\Models\User;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
