@@ -86,7 +86,7 @@ class User extends BaseModel implements
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function primaryRole() {
-        return $this->belongsTo('App\Models\Role', 'primary_role');
+        return $this->belongsTo(Role::class, 'primary_role');
     }
 
     /**
@@ -95,7 +95,16 @@ class User extends BaseModel implements
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function roles() {
-        return $this->belongsToMany('App\Models\Role', 'user_roles', 'user_id', 'role_id');
+        return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');
+    }
+
+    /**
+     * User's campaigns
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function campaigns() {
+        return $this->hasMany(Campaign::class, 'user_id', 'user_id');
     }
 
     /**
