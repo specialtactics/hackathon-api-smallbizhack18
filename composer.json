@@ -12,12 +12,13 @@
     ],
     "require": {
         "php": "^7.1.3",
+        "barryvdh/laravel-cors": "^0.11.0",
         "fideloper/proxy": "^4.0",
+        "fzaninotto/faker": "^1.4",
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",
         "predis/predis": "^1.1",
-        "specialtactics/l5-api": "dev-master",
-        "fzaninotto/faker": "^1.4"
+        "specialtactics/l5-api": "dev-master"
     },
     "require-dev": {
         "filp/whoops": "^2.0",
