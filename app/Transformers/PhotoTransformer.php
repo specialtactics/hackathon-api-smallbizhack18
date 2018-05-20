@@ -13,6 +13,7 @@ class PhotoTransformer extends BaseTransformer
 
         $resource['instagramUrl'] = $model->getInstagramUrlAttribute();
         $resource['postValue'] = $model->getPostValueAttribute();
+
         return $resource;
     }
 

@@ -87,7 +87,7 @@ class UserCampaignController extends RestfulChildController
 //                $campaign->setRelation('photos', $photoCollection);
 //            }
 
-            return $this->response->collection($uniqueCampaigns, CampaignTransformer::class)->setStatusCode(200);
+            return $this->response->collection($uniqueCampaigns, $this->getTransformer())->setStatusCode(200);
 
         } else {
 

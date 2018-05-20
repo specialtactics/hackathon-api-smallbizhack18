@@ -14,7 +14,6 @@ class CampaignTransformer extends BaseTransformer
         $resource['countLikes'] = $model->countLikesAttribute();
         $resource['countComments'] = $model->countCommentsAttribute();
         $resource['countPosts'] = $model->countPostsAttribute();
-        $resource['photos'] = array_values($model->photos->toArray());
         return $resource;
     }
 
