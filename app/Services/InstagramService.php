@@ -57,10 +57,10 @@ class InstagramService
                                 'username' => $post->getUser()->getUserName(),
                                 'likes' => $post->getLikesCount(),
                                 'comments' => $post->getCommentsCount(),
-                                'location_id' => $post->getLocation() ? $post->getLocation()->getId() : null,
-                                'location_name' => $post->getLocation() ? $post->getLocation()->getName() : null,
-                                'location_slug' => $post->getLocation() ? $post->getLocation()->getSlug() : null,
-                                'location_coordinate' => $post->getLocation() ? $post->getLocation()->getCoordinate : null,
+//                                'location_id' => $post->getLocation() ? $post->getLocation()->getId() : null,
+//                                'location_name' => $post->getLocation() ? $post->getLocation()->getName() : null,
+//                                'location_slug' => $post->getLocation() ? $post->getLocation()->getSlug() : null,
+//                                'location_coordinate' => $post->getLocation() ? $post->getLocation()->getCoordinate : null,
                                 'tags' => \GuzzleHttp\json_encode($post->getTags()),
                                 'created' => $post->getCreated()
                             ];
