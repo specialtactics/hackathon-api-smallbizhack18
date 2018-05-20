@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Transformers\BaseTransformer;
+use GuzzleHttp\Exception\BadResponseException;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 
 class Payout extends BaseModel
 {
@@ -49,7 +51,6 @@ class Payout extends BaseModel
     public function getValidationRules()
     {
         return [
-            'amount' => 'required|numeric',
             'email' => 'required|email',
         ];
     }
@@ -60,6 +61,33 @@ class Payout extends BaseModel
     protected $casts = [
         'amount' => 'real',
     ];
+
+    /**
+     * Boot the model
+     *
+     * Add various functionality in the model lifecycle hooks
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        // Add functionality for creating a model
+        static::creating(function (Payout $model) {
+            $user = User::findOrFail($model->user_id);
+
+            // Check user's balance above 0
+            if ($user->balance <= 0) {
+                throw new AccessDeniedException('User does not have a balance above 0');
+            }
+
+            // Set amount at user's balance
+            $model->amount = $user->balance;
+
+            // Null the user's balance
+            $user->balance = 0;
+            $user->save();
+        });
+    }
 
     /**
      * Get batch ID for paypal - limited to 30 characters
