@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CampaignUserPhoto;
 use App\Models\Photo;
 use App\Models\Role;
+use App\Transformers\CampaignTransformer;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Specialtactics\L5Api\Http\Controllers\RestfulChildController;
@@ -86,7 +87,7 @@ class UserCampaignController extends RestfulChildController
                 $campaign->setRelation('photos', $photoCollection);
             }
 
-            return $this->response->collection($uniqueCampaigns, $this->getTransformer())->setStatusCode(200);
+            return $this->response->collection($uniqueCampaigns, CampaignTransformer::class)->setStatusCode(200);
 
         } else {
 
