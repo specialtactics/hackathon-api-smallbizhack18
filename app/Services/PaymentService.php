@@ -22,6 +22,10 @@ class PaymentService
 
     public function payout(Payout $payout)
     {
+        //
+        // PayPal
+        //
+
         // PayPal payout
         $payouts = $this->paypal->payout(); // returns PayPal\Api\Payout
 
@@ -44,36 +48,7 @@ class PaymentService
         $payouts->addItem($senderItem);
 
         // Payout create
-        $output = $payouts->create([], $this->paypal->getApiContext());
-
-/*
-        PayoutBatch {#890
-        -_propMap: array:2 [
-            "batch_header" => PayoutBatchHeader {#893
-            -_propMap: array:3 [
-                "payout_batch_id" => "3DJFX4BAYR3G6"
-        "batch_status" => "PENDING"
-        "sender_batch_header" => PayoutSenderBatchHeader {#896
-                -_propMap: array:2 [
-                    "sender_batch_id" => "55165ec088524bf5addbc0dfe53c50"
-            "email_subject" => "You have received a payout from Socialise !"
-          ]
-        }
-      ]
-    }
-    "links" => array:1 [
-            0 => Links {#899
-            -_propMap: array:4 [
-                "href" => "https://api.sandbox.paypal.com/v1/payments/payouts/3DJFX4BAYR3G6"
-          "rel" => "self"
-          "method" => "GET"
-          "enctype" => "application/json"
-        ]
-      }
-    ]
-  ]
-}
-        */
+        $payouts->create([], $this->paypal->getApiContext());
     }
 
 }

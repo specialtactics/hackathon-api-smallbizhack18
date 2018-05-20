@@ -9,6 +9,7 @@ use App\Models\Payout;
 use App\Models\User;
 use Specialtactics\L5Api\Http\Controllers\RestfulChildController;
 use App\Services\RestfulService;
+use DB;
 
 class PayoutController extends RestfulChildController
 {
@@ -30,7 +31,9 @@ class PayoutController extends RestfulChildController
 
     public function post($parentUuid, Request $request)
     {
+        DB::beginTransaction();
         $resource =  parent::post($parentUuid, $request);
+        DB::commit();
 
         $this->paymentService->payout($resource);
 
