@@ -74,7 +74,7 @@ class Photo extends BaseModel
         return [];
     }
 
-    public function getUrlAttribute()
+    public function getInstagramUrlAttribute()
     {
         return 'https://www.instagram.com/p/' . $this->code;
     }
