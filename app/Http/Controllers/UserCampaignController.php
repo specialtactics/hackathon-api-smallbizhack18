@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CampaignUserPhoto;
 use App\Models\Photo;
 use App\Models\Role;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Specialtactics\L5Api\Http\Controllers\RestfulChildController;
 use App\Models\Campaign;
@@ -75,6 +76,15 @@ class UserCampaignController extends RestfulChildController
             $photos = Photo::where('user_id', '=', $user->user_id)->get();
 
             $uniqueCampaigns = $campaigns->whereIn('campaign_id', array_pluck($photos->toArray(), 'campaign_id'));
+
+            foreach ($uniqueCampaigns as $campaign) {
+                /** @var Campaign $campaign */
+                $photoCollection = $campaign->photos->filter(function ($value, $key) use ($user) {
+                    return $value['user_id'] == $user->user_id;
+                });
+
+                $campaign->setRelation('photos', $photoCollection);
+            }
 
             return $this->response->collection($uniqueCampaigns, $this->getTransformer())->setStatusCode(200);
 
