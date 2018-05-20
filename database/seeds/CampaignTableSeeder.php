@@ -45,7 +45,7 @@ class CampaignTableSeeder extends BaseSeeder
         ]);
 
         factory(App\Models\CampaignTag::class)->create([
-            'name' => 'smallbizhack',
+            'name' => 'hackathon',
             'campaign_id' => $campaign->campaign_id,
         ]);
 
