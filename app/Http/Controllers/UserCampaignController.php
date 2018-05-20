@@ -77,15 +77,15 @@ class UserCampaignController extends RestfulChildController
             $photos = Photo::where('user_id', '=', $user->user_id)->get();
 
             $uniqueCampaigns = $campaigns->whereIn('campaign_id', array_pluck($photos->toArray(), 'campaign_id'));
-
-            foreach ($uniqueCampaigns as $campaign) {
-                /** @var Campaign $campaign */
-                $photoCollection = $campaign->photos->filter(function ($value, $key) use ($user) {
-                    return $value['user_id'] == $user->user_id;
-                });
-
-                $campaign->setRelation('photos', $photoCollection);
-            }
+//
+//            foreach ($uniqueCampaigns as $campaign) {
+//                /** @var Campaign $campaign */
+//                $photoCollection = $campaign->photos->filter(function ($value, $key) use ($user) {
+//                    return $value['user_id'] == $user->user_id;
+//                });
+//
+//                $campaign->setRelation('photos', $photoCollection);
+//            }
 
             return $this->response->collection($uniqueCampaigns, CampaignTransformer::class)->setStatusCode(200);
 
