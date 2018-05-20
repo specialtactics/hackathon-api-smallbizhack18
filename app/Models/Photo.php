@@ -36,7 +36,7 @@ class Photo extends BaseModel
     /**
      * @var array The attributes that are mass assignable.
      */
-    protected $fillable = ['campaign_id', 'post_id', 'code', 'instagram_user_id', 'url', 'caption', 'user_id', 'username', 'likes', 'comments', 'location_id', 'location_name', 'location_slug', 'location_coordinate', 'tags', 'created'];
+    protected $fillable = ['campaign_id', 'post_id', 'code', 'instagram_user_id', 'url', 'caption', 'user_id', 'username', 'likes', 'comments', 'location_id', 'location_name', 'location_slug', 'location_coordinate', 'tags', 'created', 'thumb'];
 
     /**
      * @var array The attributes that should be hidden for arrays and API output
