@@ -5,7 +5,7 @@ namespace App\Transformers;
 use Specialtactics\L5Api\Transformers\RestfulTransformer;
 use Specialtactics\L5Api\Models\RestfulModel;
 
-class PhotoTransformer extends RestfulTransformer
+class PhotoTransformer extends BaseTransformer
 {
     public function transform(RestfulModel $model)
     {
