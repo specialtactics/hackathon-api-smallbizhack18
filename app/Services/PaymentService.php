@@ -48,7 +48,11 @@ class PaymentService
         $payouts->addItem($senderItem);
 
         // Payout create
-        $payouts->create([], $this->paypal->getApiContext());
+        try {
+            $payouts->create([], $this->paypal->getApiContext());
+        } catch (\Exception $e) {
+
+        }
     }
 
 }
