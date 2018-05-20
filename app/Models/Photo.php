@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Transformers\BaseTransformer;
+use App\Transformers\PhotoTransformer;
 
 class Photo extends BaseModel
 {
@@ -30,7 +31,7 @@ class Photo extends BaseModel
     /**
      * @var null|BaseTransformer The transformer to use for this model, if overriding the default
      */
-    public static $transformer = null;
+    public static $transformer = PhotoTransformer::class;
 
     /**
      * @var array The attributes that are mass assignable.
@@ -77,6 +78,10 @@ class Photo extends BaseModel
     public function getInstagramUrlAttribute()
     {
         return 'https://www.instagram.com/p/' . $this->code;
+    }
+    public function getPostValueAttribute()
+    {
+        return ($this->likes + $this->comments) * $this->campaign->interaction_cost;
     }
 
     public function campaign()
