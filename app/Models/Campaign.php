@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Transformers\BaseTransformer;
+use App\Transformers\CampaignTransformer;
 
 class Campaign extends BaseModel
 {
@@ -29,7 +30,7 @@ class Campaign extends BaseModel
     /**
      * @var null|BaseTransformer The transformer to use for this model, if overriding the default
      */
-    public static $transformer = null;
+    public static $transformer = CampaignTransformer::class;
 
     /**
      * @var array The attributes that are mass assignable.
@@ -87,8 +88,26 @@ class Campaign extends BaseModel
         return $this->hasMany(CampaignTag::class, 'campaign_id', 'campaign_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function photos() {
         return $this->hasMany(Photo::class, 'campaign_id', 'campaign_id');
+    }
+    
+    public function countPostsAttribute()
+    {
+        return count($this->photos);
+    }
+
+    public function countLikesAttribute()
+    {
+        return $this->photos->sum('likes');
+    }
+    
+    public function countCommentsAttribute()
+    {
+        return $this->photos->sum('comments');
     }
 
 }
